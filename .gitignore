@@ -1,4 +1,3 @@
-backend/src/main/resources/application.properties
 backend/src/main/resources/*.json
 backend/students.xlsx
 backend/~$students.xlsx
