@@ -1,0 +1,84 @@
+<div class="registration-card glass">
+  <div class="header">
+    <h2>Student Registration</h2>
+    <p>Join the next generation of tech leaders.</p>
+  </div>
+
+  <div *ngIf="successMessage" class="alert success-alert">
+    {{ successMessage }}
+  </div>
+
+  <div *ngIf="errorMessage" class="alert error-alert">
+    {{ errorMessage }}
+  </div>
+
+  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="form-container">
+    
+    <div class="form-group">
+      <label for="name">Full Name</label>
+      <input 
+        type="text" 
+        id="name" 
+        formControlName="name" 
+        placeholder="e.g. John Doe"
+        [ngClass]="{ 'is-invalid': f['name'].touched && f['name'].invalid }"
+      >
+      <div *ngIf="f['name'].touched && f['name'].invalid" class="error-msg">
+        <small *ngIf="f['name'].errors?.['required']">Name is required.</small>
+        <small *ngIf="f['name'].errors?.['minlength']">Name must be at least 2 characters.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input 
+        type="email" 
+        id="email" 
+        formControlName="email" 
+        placeholder="e.g. john@example.com"
+        [ngClass]="{ 'is-invalid': f['email'].touched && f['email'].invalid }"
+      >
+      <div *ngIf="f['email'].touched && f['email'].invalid" class="error-msg">
+        <small *ngIf="f['email'].errors?.['required']">Email is required.</small>
+        <small *ngIf="f['email'].errors?.['email']">Please enter a valid email.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input 
+        type="tel" 
+        id="phone" 
+        formControlName="phone" 
+        placeholder="10-digit number"
+        [ngClass]="{ 'is-invalid': f['phone'].touched && f['phone'].invalid }"
+      >
+      <div *ngIf="f['phone'].touched && f['phone'].invalid" class="error-msg">
+        <small *ngIf="f['phone'].errors?.['required']">Phone number is required.</small>
+        <small *ngIf="f['phone'].errors?.['pattern']">Phone number must be exactly 10 digits.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="course">Select Course</label>
+      <div class="select-wrapper">
+        <select 
+          id="course" 
+          formControlName="course"
+          [ngClass]="{ 'is-invalid': f['course'].touched && f['course'].invalid }"
+        >
+          <option value="" disabled selected>Choose a course...</option>
+          <option *ngFor="let course of courses" [value]="course">{{ course }}</option>
+        </select>
+      </div>
+      <div *ngIf="f['course'].touched && f['course'].invalid" class="error-msg">
+        <small *ngIf="f['course'].errors?.['required']">Please select a course.</small>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn" [disabled]="isSubmitting">
+      <span *ngIf="!isSubmitting">Register Now</span>
+      <span *ngIf="isSubmitting" class="loader">Processing...</span>
+    </button>
+  </form>
+</div>
